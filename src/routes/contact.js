@@ -12,7 +12,7 @@ router.post('', async (req, res) =>
         message: req.body.message
     }
 
-    // Email validation
+    // Validation
     try {
         await contactSchema.validateAsync(data);
     }
@@ -20,6 +20,7 @@ router.post('', async (req, res) =>
         return res.status(200).send({ message: err.details[0].message, error: 'InvalidInput' })
     }
 
+    // Email to myself
     const {
         TRANSPORT_USER,
         TRANSPORT_PASSWORD
@@ -45,10 +46,8 @@ router.post('', async (req, res) =>
     
         transporter.sendMail(mailOptions, function(error, info){
             if (error) {
-                console.log(error)
                 return res.status(500).send({ message: messages.errorMessage })
             } else {
-                console.log("status")
                 return res.status(200).send({ message: messages.contactSuccess })
             }
         });
