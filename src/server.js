@@ -47,5 +47,5 @@ app.use('*', (req, res) => {
 // Open Server on selected Port
 app.listen(
     process.env.PORT,
-    () => console.info('Server listening on port ', PORT)
+    () => console.info('Server listening on port ', process.env.PORT)
 );
