@@ -12,20 +12,8 @@ const helmet = require('helmet');
 
 const logger = require('./utils/logger');
 
-// Load .env Enviroment Variables to process.env
-require('mandatoryenv').load([
-    'PORT',
-    'TRANSPORT_USER',
-    'TRANSPORT_PASSWORD',
-    'SECRET'
-]);
-
-const { PORT } = process.env;
-
-
 // Instantiate an Express Application
 const app = express();
-
 
 // Configure Express App Instance
 app.use(express.json( { limit: '50mb' } ));
@@ -35,10 +23,7 @@ app.use(express.urlencoded( { extended: true, limit: '10mb' } ));
 app.use(logger.dev, logger.combined);
 
 app.use(cookieParser());
-app.use(cors({ 
-    origin: process.env.ENVIRONMENT === 'Production' ? '*' : 'http://localhost:3000',
-    credentials: process.env.ENVIRONMENT === 'Production' ? false : true
-}));
+app.use(cors())
 app.use(helmet());
 
 // This middleware adds the json header to every response
@@ -61,6 +46,6 @@ app.use('*', (req, res) => {
 
 // Open Server on selected Port
 app.listen(
-    PORT,
+    process.env.PORT,
     () => console.info('Server listening on port ', PORT)
 );
