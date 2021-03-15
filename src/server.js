@@ -15,6 +15,9 @@ const logger = require('./utils/logger');
 // Instantiate an Express Application
 const app = express();
 
+const dotenv = require('dotenv')
+dotenv.config()
+
 // Configure Express App Instance
 app.use(express.json( { limit: '50mb' } ));
 app.use(express.urlencoded( { extended: true, limit: '10mb' } ));
@@ -47,5 +50,5 @@ app.use('*', (req, res) => {
 // Open Server on selected Port
 app.listen(
     process.env.PORT,
-    () => console.info('Server listening on port ', process.env.PORT)
+    () => console.info('Server listening on port', process.env.PORT)
 );
